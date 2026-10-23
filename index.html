@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>From Episode to Inbox: Melissa Rodier</title>
+<meta name="description" content="Ship a newsletter with me. How I’d turn one Exit Five podcast episode into Dave’s newsletter, step by step, including how I work with AI.">
+<meta property="og:title" content="From Episode to Inbox: Melissa Rodier">
+<meta property="og:description" content="Ship a newsletter with me. One podcast episode, one newsletter, every step of the process.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F8; --surface:#FFFFFF; --ink:#18203A; --muted:#58607E; --line:#D7DCE8;
+  --accent:#3346F0; --accent-ink:#FFFFFF; --accent-soft:#E4E7FF;
+  --mark:#FFE45C; --mark-ink:#18203A; --good:#147A4B; --good-soft:#DDF3E8;
+  --ui:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --read:"Newsreader", Georgia, "Times New Roman", serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#10142A; --surface:#181D38; --ink:#ECEEF7; --muted:#A4AAC6; --line:#2C3356;
+    --accent:#8E9AFF; --accent-ink:#10142A; --accent-soft:#252C5E;
+    --mark:#E9CF42; --mark-ink:#10142A; --good:#6FD3A0; --good-soft:#163A2B;
+    color-scheme:dark;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:17px;line-height:1.55}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+img{max-width:100%}
+
+/* layout */
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-size:15px}
+.top .who{font-weight:800}
+.top nav{display:flex;gap:18px;flex-wrap:wrap}
+
+/* hero */
+.hero{padding:48px 0 56px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(44px,7.4vw,88px);line-height:.95;letter-spacing:-.03em;font-weight:800;margin:0 0 14px}
+.hero .tag{font-family:var(--read);font-style:italic;font-size:clamp(22px,2.6vw,30px);margin:0 0 22px;color:var(--muted)}
+.hero p.lede{max-width:34em;margin:0 0 16px}
+.fine{font-size:14px;color:var(--muted)}
+.pipe{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+.pipe svg{display:block;width:100%;height:auto}
+.pipe .cap{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-top:10px}
+
+/* steps */
+.steps{padding-bottom:40px}
+.rail{position:sticky;top:calc(20px + env(safe-area-inset-top,0px));align-self:start;font-size:15px}
+.rail ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.rail li a{display:block;padding:6px 0 6px 14px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none}
+.rail li a.on{color:var(--ink);border-left-color:var(--accent);font-weight:600}
+.step{padding:28px 0 44px;border-top:1px solid var(--line)}
+.step:first-child{border-top:0;padding-top:0}
+.step-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.step-num{font-size:56px;font-weight:800;line-height:1;color:var(--accent);min-width:1.1em}
+.step h2{font-size:clamp(26px,3.2vw,36px);line-height:1.1;letter-spacing:-.02em;margin:0}
+.prose{max-width:40em}
+.prose p{margin:0 0 14px}
+h3{font-size:20px;margin:26px 0 10px;letter-spacing:-.01em}
+
+/* AI note: highlighter */
+.ai{max-width:40em;margin:20px 0 0;padding:14px 18px;border-radius:12px;background:var(--accent-soft)}
+.ai strong{display:block;margin-bottom:4px}
+.ai p{margin:0}
+
+/* placeholders */
+.todo{max-width:40em;border:2px dashed var(--line);border-radius:12px;padding:16px 18px;color:var(--muted);margin:12px 0}
+
+/* step 1 */
+.ep{max-width:40em;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.ep h3{margin:0 0 6px}
+.ep p{margin:0 0 8px}
+
+/* step 2 voice */
+.voice{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:52em}
+.voice > div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.voice h3{margin:0 0 10px}
+.voice ul{margin:0;padding-left:18px}
+.voice li{margin-bottom:8px}
+
+/* step 3 angles */
+.angles{list-style:none;margin:0;padding:0;max-width:44em}
+.angles li{padding:16px 0;border-bottom:1px solid var(--line)}
+.angles li:last-child{border-bottom:0}
+.angles .status{display:inline-block;font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;margin-bottom:6px;background:var(--bg);border:1px solid var(--line)}
+.angles .go .status{background:var(--good-soft);color:var(--good);border-color:transparent}
+.angles h4{margin:0 0 4px;font-size:19px}
+.angles p{margin:0}
+
+/* step 4 draft toggle */
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:var(--surface);margin-bottom:16px}
+.toggle button{font:inherit;font-size:15px;border:0;background:transparent;color:var(--ink);padding:8px 16px;border-radius:999px;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.letter{max-width:40em;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px clamp(18px,4vw,40px);font-family:var(--read);font-size:19px;line-height:1.65}
+.letter h3{font-family:var(--ui);font-size:23px;margin:26px 0 8px}
+.letter h3:first-child{margin-top:0}
+.letter p{margin:0 0 14px}
+.letter .aside{font-style:italic;border-left:3px solid var(--mark);padding-left:14px}
+.letter .sign{margin-top:18px}
+.letter.raw{white-space:pre-wrap}
+.catches{max-width:40em;padding-left:20px}
+.catches li{margin-bottom:10px}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:3px}
+
+/* step 5 */
+.subjects{max-width:40em;padding-left:20px}
+.subjects li{margin-bottom:8px;font-family:var(--read);font-size:19px}
+
+/* game */
+.game{max-width:44em;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px clamp(16px,3vw,30px);margin:8px 0 20px}
+.game-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.game-top h3{margin:0;font-size:26px}
+.tally{font-size:15px;color:var(--muted)}
+.tally b{color:var(--ink);font-size:20px}
+.q{margin:6px 0 16px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opt{font:inherit;text-align:left;cursor:pointer;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:16px;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:border-color .15s}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .kw{font-family:var(--read);font-size:20px;line-height:1.3}
+.opt .vol{font-size:14px;color:var(--muted)}
+.opt .vol b{font-size:22px;color:var(--ink);display:block}
+.opt:disabled{cursor:default}
+.opt.picked{border-color:var(--accent)}
+.opt .res{display:none;font-size:15px;border-top:1px solid var(--line);padding-top:10px}
+.opt.shown .res{display:block}
+.opt .res b{font-size:18px}
+.reveal{display:none;margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--accent-soft)}
+.reveal.show{display:block}
+.reveal p{margin:0 0 10px}
+.btn{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:999px;padding:10px 20px;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.end{text-align:left}
+.end .title{font-size:clamp(30px,4vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:6px 0 10px}
+.dots{display:flex;gap:6px;margin-top:18px}
+.dots span{width:22px;height:5px;border-radius:3px;background:var(--line)}
+.dots span.done{background:var(--accent)}
+
+
+.post{max-width:34em;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 14px}
+.post p{margin:0 0 10px}
+.measure{list-style:none;padding:0;margin:0 0 16px;max-width:40em}
+.measure li{padding:10px 0;border-bottom:1px solid var(--line)}
+.measure b{display:block}
+/* stepper */
+.tabs{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 12px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.tabs ol{list-style:none;margin:0;padding:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs a{display:flex;align-items:center;gap:8px;white-space:nowrap;padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-size:15px;border:1px solid transparent}
+.tabs a span{font-weight:800}
+.tabs a[aria-current="step"]{background:var(--surface);border-color:var(--line);color:var(--ink);font-weight:600}
+.tabs a[aria-current="step"] span{color:var(--accent)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.stepper .step{border-top:0;padding-top:16px}
+.stepper .step[hidden]{display:none}
+.stepnav{display:flex;justify-content:space-between;gap:12px;margin-top:30px;max-width:40em}
+.stepnav .btn[hidden]{display:none}
+/* floating game button + dialog */
+.fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;font:inherit;font-weight:700;border:0;border-radius:999px;padding:14px 20px;background:var(--mark);color:var(--mark-ink);cursor:pointer;box-shadow:0 6px 20px rgba(16,20,42,.25)}
+dialog.gamebox{border:0;padding:0;background:transparent;max-width:min(720px,94vw);width:100%}
+dialog.gamebox::backdrop{background:rgba(16,20,42,.55)}
+dialog.gamebox .game{margin:0;position:relative}
+.close{position:absolute;top:12px;right:12px;font:inherit;font-size:22px;line-height:1;border:0;background:transparent;color:var(--muted);cursor:pointer;padding:6px 10px;border-radius:8px}
+.game-top{padding-right:36px}
+
+footer{border-top:1px solid var(--line);padding:30px 0 48px;font-size:15px;color:var(--muted)}
+footer .links{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 14px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-top:24px}
+}
+@media (max-width:560px){
+  .voice,.opts{grid-template-columns:1fr}
+  .opt{min-height:0}
+  .step-num{font-size:44px}
+  .top nav{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="who">Melissa Rodier</span>
+    <nav>
+      <a href="mailto:melissa.a.rodier@gmail.com">melissa.a.rodier@gmail.com</a>
+      <a href="https://linkedin.com/in/melissa-rodier">LinkedIn</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>From Episode to Inbox</h1>
+      <p class="tag">Ship a newsletter with me</p>
+      <p class="lede">Hi! I’m Melissa. Exit Five is hiring someone to own Dave’s newsletter, so I did the job: I took one episode of The Dave Gerhardt Show and turned it into a newsletter. Here’s every step, including how I worked with AI, my messy first draft, and what I changed.</p>
+      <p class="fine">A sample project I made for my application. Not affiliated with or endorsed by Exit Five.</p>
+    </div>
+    <div class="pipe" aria-hidden="true">
+      <svg viewBox="0 0 320 150" role="img">
+        <g fill="var(--accent)">
+          <rect x="8" y="62" width="6" height="26" rx="3"/><rect x="20" y="48" width="6" height="54" rx="3"/>
+          <rect x="32" y="30" width="6" height="90" rx="3"/><rect x="44" y="54" width="6" height="42" rx="3"/>
+          <rect x="56" y="40" width="6" height="70" rx="3"/><rect x="68" y="22" width="6" height="106" rx="3"/>
+          <rect x="80" y="50" width="6" height="50" rx="3"/><rect x="92" y="36" width="6" height="78" rx="3"/>
+          <rect x="104" y="58" width="6" height="34" rx="3"/><rect x="116" y="66" width="6" height="18" rx="3"/>
+        </g>
+        <path d="M134 75 h34" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 8"/>
+        <rect x="180" y="20" width="132" height="110" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+        <rect x="194" y="36" width="72" height="9" rx="4" fill="var(--ink)"/>
+        <rect x="194" y="56" width="104" height="5" rx="2.5" fill="var(--muted)"/>
+        <rect x="194" y="68" width="96" height="5" rx="2.5" fill="var(--muted)"/>
+        <rect x="194" y="80" width="100" height="5" rx="2.5" fill="var(--mark)"/>
+        <rect x="194" y="92" width="80" height="5" rx="2.5" fill="var(--muted)"/>
+        <rect x="194" y="110" width="40" height="7" rx="3.5" fill="var(--accent)"/>
+      </svg>
+      <div class="cap"><span>45 minutes of podcast</span><span>5 minutes of newsletter</span></div>
+    </div>
+  </section>
+
+  <div class="steps">
+    <nav class="tabs" aria-label="Steps">
+      <ol>
+        <li><a href="#episode"><span>1</span>The episode</a></li>
+        <li><a href="#voice"><span>2</span>Dave’s voice</a></li>
+        <li><a href="#angle"><span>3</span>The angle</a></li>
+        <li><a href="#draft"><span>4</span>The draft</a></li>
+        <li><a href="#ship"><span>5</span>Ship it</a></li>
+        <li><a href="#many"><span>6</span>One into many</a></li>
+        <li><a href="#measure"><span>7</span>Measure</a></li>
+      </ol>
+    </nav>
+
+    <main class="stepper" id="stepper">
+      <!-- STEP 1 -->
+      <section class="step" id="episode">
+        <div class="step-head"><span class="step-num">1</span><h2>Pick the episode</h2></div>
+        <div class="prose">
+          <p>I looked for an episode where Dave hosts (so there’s plenty of his voice to work from), the topic is something Exit Five readers care about, and there’s enough substance for more than one newsletter.</p>
+        </div>
+        <div class="ep">
+          <h3>How To Drive Revenue Through Content, with Lashay Lewis</h3>
+          <p>A Best of B2B episode with Lashay Lewis, founder of BOFU.ai, on why B2B content strategy should start at the bottom of the funnel. About 45 minutes.</p>
+          <p><a href="https://exitfive.com/podcast/how-to-drive-revenue-through-content-with-lashay-lewis-founder-authority-plug">Listen to the episode</a></p>
+        </div>
+        <div class="ai">
+          <strong>How I used AI here</strong>
+          <p>Claude helped me scan recent episodes and pull the transcript. I made the call on which one to use.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" id="voice">
+        <div class="step-head"><span class="step-num">2</span><h2>Find Dave’s voice</h2></div>
+        <div class="prose">
+          <p>Podcast Dave and newsletter Dave are the same person, but they don’t sound exactly the same. Before writing anything, I compared the episode with recent issues of the newsletter.</p>
+        </div>
+        <div class="voice">
+          <div>
+            <h3>On the pod</h3>
+            <ul>
+              <li>Talks to one person, not an audience. Opens with “All right, look.”</li>
+              <li>Asks the skeptical question the listener is thinking.</li>
+              <li>Backs up the guest with his own stories, like Drift.</li>
+              <li>Admits when he’s wrong, and laughs about it.</li>
+              <li>Playful. There’s an air horn reference.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>In the newsletter</h3>
+            <ul>
+              <li>The body tells the guest’s story clearly and simply.</li>
+              <li>His personality lives in short italic asides.</li>
+              <li>Short paragraphs, sentence fragments, headers that tell you what to do.</li>
+              <li>Ends on a bold one-liner and a little self-deprecation.</li>
+              <li>Asks readers to hit reply.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ai">
+          <strong>How I used AI here</strong>
+          <p>Claude broke down voice patterns from the transcript and the newsletter archive. I checked them against issue #296, which turned an episode into a newsletter, to see what they kept and what they cut.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" id="angle">
+        <div class="step-head"><span class="step-num">3</span><h2>Choose one idea</h2></div>
+        <div class="prose">
+          <p>Exit Five newsletters go deep on one idea instead of summarizing a whole episode. This episode had at least five. Here’s what I considered and why.</p>
+        </div>
+        <ul class="angles">
+          <li class="go">
+            <span class="status">Greenlit</span>
+            <h4>Stop chasing search volume</h4>
+            <p>Search volume is the mythical number everyone chases and measures success against. But when you’re on a team that needs real results fast, the answer is to focus in instead of going broad. That’s a lesson every lean marketing team needs, and AI search makes it more relevant now than when the episode first aired.</p>
+          </li>
+          <li>
+            <span class="status">Next up</span>
+            <h4>Stop chasing your SMEs</h4>
+            <p>Get sales, CS and product to fill in one research hub up front, so writers never have to beg for interviews again. A pain point that comes up in the Exit Five community all the time.</p>
+          </li>
+          <li>
+            <span class="status">Next up</span>
+            <h4>Write like a journalist, not an SEO writer</h4>
+            <p>Dave’s point about addressing the elephant in the room, and Lashay’s case for writers who think beyond rankings. A writing-craft angle that hasn’t been covered.</p>
+          </li>
+          <li>
+            <span class="status">Passed</span>
+            <h4>Feature mapping</h4>
+            <p>Lashay’s big framework in the episode, and a great one! But Exit Five already broke it down step by step, so I’d point readers there instead of repeating it. <a href="https://exitfive.com/newsletter/how-to-create-really-good-bofu-content/">Read: How to create really good BOFU content</a></p>
+          </li>
+          <li>
+            <span class="status">Passed</span>
+            <h4>Repurposing what converts</h4>
+            <p>Right on theme, but issue #293 just covered Ross Simmonds’ create once, distribute forever playbook.</p>
+          </li>
+        </ul>
+        <div class="ai">
+          <strong>How I used AI here</strong>
+          <p>Claude laid out the options. I asked whether Exit Five had already covered Lashay, and they had, which is how feature mapping moved to “passed.”</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" id="draft">
+        <div class="step-head"><span class="step-num">4</span><h2>Write it, then edit it</h2></div>
+        <div class="prose">
+          <p>I wrote the first draft myself, fast and messy. Then I used AI as an editor, not a ghostwriter. Flip between the two versions.</p>
+        </div>
+        <div class="toggle" role="group" aria-label="Choose a version">
+          <button type="button" id="btnFinal" aria-pressed="true">Final version</button>
+          <button type="button" id="btnFirst" aria-pressed="false">My first draft</button>
+        </div>
+
+        <article class="letter" id="final">
+          <h3>Stop chasing search volume</h3>
+          <p>When Lashay Lewis first came on the pod a few years ago, she was preaching bottom-of-funnel content while most of us were still obsessed with traffic. Now she’s the founder of BOFU.ai, and she spends her days helping B2B SaaS companies get that same content found in AI search.</p>
+          <p>Which tells you something. Everyone is chasing a mythical AI playbook that will magically solve everything. But the fundamentals are what they’ve always been: real answers to the questions buyers actually have. AI search just rewards them more than ever.</p>
+          <p>So I went back to our conversation, and it holds up even better now than when we recorded it.</p>
+          <p>Sooner or later, every leader asks the big question: “How is this content making us money?” Most content teams scramble to answer it. Lashay has a clear answer.</p>
+
+          <h3>Write for the 50, not the 50,000</h3>
+          <p>Lashay isn’t trying to get in front of the most people. She wants to get in front of the people ready to make a decision: the buyer with a real problem who’s looking for an answer.</p>
+          <p>So instead of churning out 100 top-of-funnel articles in a 90-day sprint, go after the smaller, more specific searches from buyers who already know what they need to solve. They don’t need convincing. They need a solution, and you have one.</p>
+          <p class="aside">Back at Drift, we learned from customer research that sales leaders thought live chat just wasted their reps’ time on support questions. So we built content that laid out every one of those objections and answered them head-on. When you speak to the pain points your buyers actually have, converting them gets a lot easier.</p>
+
+          <h3>Lead with the pain point</h3>
+          <p>At the bottom of the funnel, skip the generic stats. Your buyers have come this far already. Lead with the pain point, make it product-led, and focus on what actually matters to them. Lashay points to HubSpot and ServiceTitan as companies getting this right. Her advice: “Get to the point. Tell them why your solution is the best.” Then map specific features to specific pain points.</p>
+          <p class="aside">We broke down Lashay’s whole feature mapping framework in an earlier newsletter. If you missed it, it’s worth a read: <a href="https://exitfive.com/newsletter/how-to-create-really-good-bofu-content/">How to create really good BOFU content</a>.</p>
+          <p class="aside">Because in the middle of a busy day, with dozens of other deadlines and decisions, do I want to skim three paragraphs of filler before I get to what matters? Or do I want the info I need at the jump?</p>
+
+          <h3>Be a sniper</h3>
+          <p>If you’re on a small team with a lean budget, where do you want your time and energy to go? You can take the shotgun approach and cast a wide net with a slim chance of real impact. Or you can go the sniper route and zero in on the target that matters. And when it’s time to tie content to pipeline, bottom-of-funnel content is the easiest to connect to real results, with SQLs you can show within about 90 days.</p>
+          <p class="aside">It’s way too easy to get stuck on the hamster wheel of churning out top-of-funnel content. I’ve made that mistake myself. As marketers, we’re biased toward big numbers. It’s like playing the lotto, waiting for that one piece of content to pull in all the traffic and change my life. Bottom of the funnel is the safe money. It’s not as buzzy, but it gets the job done and meets the buyer where they are.</p>
+          <p><strong>Start from the bottom.</strong> If I were leading a lean content team today (cue the “back in my day” and “content marketers these days” clichés), and we could only focus on one thing, I’d skip the top and go straight to the bottom of the funnel. You might miss out on some vanity metrics, but you’ll hit the ones that really matter. Paid teams have it easy: they can draw a straight line from the work to ROAS. Content teams have to prove their value, and the bottom of the funnel is where you can show it fastest and most directly.</p>
+          <p>But don’t just take it from me. Lashay has so much more great advice in the <a href="https://exitfive.com/podcast/how-to-drive-revenue-through-content-with-lashay-lewis-founder-authority-plug">full episode</a>.</p>
+          <p>Think you can spot the 50? <a href="#play">Play the 50 or 50,000 game</a> and see how many demos you’d book.</p>
+          <p class="sign">– Dave</p>
+          <p><strong>P.S.</strong> What’s your best-converting bottom-of-funnel piece? Hit reply and tell me. I want to see what’s working for you.</p>
+        </article>
+
+        <article class="letter raw" id="first" hidden>Lashay Lewis is the founder of BOFU.ai, and a content strategist helping B2B SAAS companies optimize for bottom of the funnel. She has built her entire career in content, working across affiliate sites, e-commerce, and B2B SAAS.
+This is her second time appearing on the podcast, and every time she challenges my own views in ways that get me thinking about content and the funnel in new ways.
+But the whole point is, despite what we all might think, it’s not really that new. The playbook is the same; what people are looking for and what is being rewarded is the same: real answers to the actual questions people need answered.
+Everyone is chasing a mythical AI Playbook that will magically solve everything, but the truth is the fundamentals are what they’ve always been. And now with AI search rewarding content that answers buyer questions, getting those fundamentals down means more than ever before.
+Sooner or later, every leader has asked, and every content team has tried to answer the big question: “How is this content making us money?” And while most content teams scramble to answer that question, Lashay has the systems in place to know how to not only build the systems that deliver, but answer that question easily.
+Write for the 50, not the 50,000. Lashay wants to get in front of the people ready to make a decision, not just get in front of the most people. He wants to find that buyer looking for an answer to a real problem, and deliver it to them on a silver platter. 
+
+Instead of churning out hundreds of pieces of top-of-funnel content in a quick 90 day sprint, go after those smaller specific searches that answer the question of a buyer looking to solve a problem. They don’t need convincing, they need a solution, and one you can offer.
+Drift faced an objection where sales leadership saw live chat as something that ended up wasthing their reps time with support questions. Drift build the content to answer this objection directly. Drift laid out all of those objections, and the response right there, making it that much easier to convert when you’re speaking to a customer’s real pain points. 
+Lead with the pain point. When you’re talking to B2B buyers at the bottom of the funnel, you can skip the generic stats. They’ve come this far already. Lead with the pain point, make it product led, focus on what actually matters to your buyer. ServiceTitan is a great example of a brand getting it right:
+“They don't, you know, start with, "Oh, you know, this statistic is, you know, 56% of..." There's no point in doing that, especially when it comes to bottom of funnel. Like, get to the point Tell them why your solution is the best. Map specific features to specific pain points. Use those pain points to drive the keyword research.”
+Because in the middle of a busy day with dozens of other deadlines and decisions, do I want to spend my time skimming through three paragraphs of filler content before I get to what matters, or do I want the info I need at the jump.
+Be a Sniper. If you’re on a small team, with a lean budget, where do you want your time and energy to go?. You can either take the shotgun approach and cast a wide net with a slim chance of making real impact, or go the sniper route and zero in on the target that matters. At the end of the day, when it’s time to tie content to actual pipelines, bottom of the funnel always wins out, giving you SQLs you can show within about 90 days.
+It’s way too easy to chase top of funnel and get caught on the hamster wheel of churning out TOFU content. I’ve made that mistake myself. As marketers, there’s a biased towards big numbers. It’s like playing the lotto and waiting for that one piece of content to pull in all the numbers and change my life. Bottom of the funnel is the safe money. It’s not as buzzy, but it gets the job done and meets the buyer where they are.
+Start from the bottom. If I was leading a lean content team today (cue the back in my day, and content marketers these days cliches), I’d say if we can only focus on one thing, skip to the top and go straight to the bottom of the funnel. You might miss out on some of the vanity metrics, but you’re going to hit the ones that really matter. In the marketing world, the paid teams have it easy; they can show a direct line between the work and the ROAS. For content teams that need to show the value in content, the bottom of the funnel is where you can show it the fastest andt the most directly. But don’t just take it from me, because Lashay has so many other great pieces of advice in the full pull pod with Lashay on YouTube.</article>
+
+        <h3>What changed, and what I caught</h3>
+        <ul class="catches">
+          <li>The Drift story moved into Dave’s own voice as an italic aside, the way the newsletter handles his personal stories.</li>
+          <li>I cut a line that put feelings in Dave’s mouth he never actually said. If it’s in his voice, it has to be true.</li>
+          <li><mark>My catch:</mark> the AI draft framed this as “bringing an episode back.” That’s podcast housekeeping, not a newsletter idea, so I reframed the intro around why the topic matters more now.</li>
+          <li><mark>My catch:</mark> I asked whether Exit Five had already written about Lashay. They had, so I linked to that issue instead of repeating it.</li>
+          <li>Trimmed a long, “you know”-filled transcript quote down to one clean line, and fixed my typos. (There were a few.)</li>
+        </ul>
+        <div class="ai">
+          <strong>How I used AI here</strong>
+          <p>I wrote it. Claude edited it for structure and voice. I decided what stayed, and pushed back where something didn’t fit.</p>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step" id="ship">
+        <div class="step-head"><span class="step-num">5</span><h2>Ship it</h2></div>
+        <div class="prose"><p>Subject lines I’d A/B test:</p></div>
+        <ol class="subjects">
+          <li>Write for the 50, not the 50,000</li>
+          <li>The content question your CEO will eventually ask</li>
+          <li>Why your best content gets the least traffic</li>
+        </ol>
+        <p><a class="btn" href="email.html" target="_blank" rel="noopener">Open the email version</a></p>
+        <div class="prose"><p>Built as email HTML in Exit Five’s format: the intro, a sponsor slot, the newsletter, one main call to action (the full episode), the reply ask, the game link, and recent content.</p></div>
+        <div class="ai">
+          <strong>How I used AI here</strong>
+          <p>I’ve used Claude to turn newsletter copy into email HTML and uploaded it to Mailchimp and other platforms. Same process here.</p>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="step" id="many">
+        <div class="step-head"><span class="step-num">6</span><h2>Turn one into many</h2></div>
+        <div class="prose">
+          <p>An email can’t be interactive, but the idea can travel. I turned the newsletter’s main argument into a quick game that can be linked from the email, LinkedIn, or the site. Seven rounds: pick the search you’d write for, and see how many demos you’d book.</p>
+        </div>
+
+        <p><button class="btn" type="button" data-open-game>Play 50 or 50,000?</button></p>
+
+        <h3>Two LinkedIn posts, from Dave’s account</h3>
+        <div class="post">
+          <p>Most content teams are playing the lotto.</p>
+          <p>Write 100 top-of-funnel posts. Wait for the one that pulls in all the traffic and changes your life.</p>
+          <p>I’ve done it. It’s fun when it hits. It mostly doesn’t.</p>
+          <p>Lashay Lewis has a better bet: write for the 50, not the 50,000.</p>
+          <p>The 50 are already looking for a solution. They don’t need convincing. They need you to get to the point.</p>
+          <p>Fewer visitors. More pipeline. Safe money.</p>
+          <p>Full breakdown in this week’s newsletter. Link in the comments.</p>
+        </div>
+        <div class="post">
+          <p>Every content leader eventually gets asked one question:</p>
+          <p>“How is this content making us money?”</p>
+          <p>If your answer is traffic, good luck.</p>
+          <p>Lashay Lewis’ answer is to start at the bottom of the funnel:</p>
+          <p>Go after searches from buyers who already know their problem.<br>Lead with the pain point, not a stat.<br>Show pipeline in about 90 days.</p>
+          <p>And now that AI search rewards content that actually answers buyer questions, it matters even more than when we recorded it.</p>
+          <p>Think you can spot the 50? Play the game: melissa-rodier.github.io/episode-to-inbox/#play</p>
+        </div>
+        <h3>Clip idea</h3>
+        <div class="prose">
+          <p>Around 06:57, where Lashay explains why search intent matters more than search volume. A 45 to 60 second vertical clip, captioned, ending on the episode link.</p>
+        </div>
+        <div class="ai">
+          <strong>How I used AI here</strong>
+          <p>I built the game with Claude, the same way I built my other <a href="https://melissa-rodier.github.io/portfolio-quest/">interactive portfolio pieces</a>. The LinkedIn posts were drafted with AI, then reviewed and edited by me.</p>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section class="step" id="measure">
+        <div class="step-head"><span class="step-num">7</span><h2>Measure what matters</h2></div>
+        <div class="prose">
+          <p>I set the success metric before the send, not after. For this issue, that’s clicks to the full episode.</p>
+        </div>
+        <ul class="measure">
+          <li><b>Opens</b> Directional only. Apple Mail Privacy Protection inflates them, so I use opens to compare subject lines, not to judge an issue.</li>
+          <li><b>Click rate</b> The real engagement signal. Which links got clicked tells me which section earned attention.</li>
+          <li><b>Clicks to the episode</b> The goal for this issue. Did the newsletter make people want the full conversation?</li>
+          <li><b>Replies</b> Dave asks for them, so they count. Replies are also free research for the next issue.</li>
+          <li><b>Game plays</b> Did the interactive piece pull people in, and how many shared their result?</li>
+          <li><b>Unsubscribes and new subscribers</b> Are we attracting the right audience, or just a bigger one?</li>
+        </ul>
+        <div class="prose">
+          <p>For context: the last email program I built and launched hit a 39.7% open rate and a 6.35% click rate, and 6.8% of the list booked a meeting. I’d benchmark against Exit Five’s own averages, test one variable per send (subject line first), and let what gets clicked shape the next angle.</p>
+        </div>
+      </section>
+      <div class="stepnav"><button class="btn ghost" type="button" id="prev">Back</button><button class="btn" type="button" id="nextStep">Next step</button></div>
+    </main>
+  </div>
+
+
+  <button class="fab" type="button" data-open-game>Play: 50 or 50,000?</button>
+  <dialog class="gamebox" id="gameDialog" aria-label="50 or 50,000? game">
+    <div class="game" id="game" aria-live="polite">
+      <button class="close" type="button" id="closeGame" aria-label="Close game">×</button>
+      <div id="gamePlay">
+        <div class="game-top">
+          <h3>50 or 50,000?</h3>
+          <span class="tally">Demos booked: <b id="tally">0</b></span>
+        </div>
+        <p class="q"><span id="roundLabel">Round 1 of 7</span>. Which search would you write for?</p>
+        <div class="opts" id="opts"></div>
+        <div class="reveal" id="reveal">
+          <p id="lesson"></p>
+          <button class="btn" type="button" id="next">Next round</button>
+        </div>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </div>
+      <div class="end" id="gameEnd" hidden>
+        <p class="tally">You booked <b id="finalTally">0</b> demos out of a possible 72.</p>
+        <p class="title" id="endTitle"></p>
+        <p id="endText"></p>
+        <button class="btn ghost" type="button" id="again">Play again</button>
+      </div>
+      <p class="fine" style="margin:16px 0 0">Search volumes, visits and demos are illustrative, over 90 days.</p>
+    </div>
+  </dialog>
+
+  <footer>
+    <p>Thanks for shipping this one with me! I’d love to talk about how I’d do this three times a week.</p>
+    <div class="links">
+      <a href="mailto:melissa.a.rodier@gmail.com">melissa.a.rodier@gmail.com</a>
+      <a href="https://linkedin.com/in/melissa-rodier">LinkedIn</a>
+      <a href="https://melissa-rodier.github.io/portfolio-quest/">Portfolio Quest</a>
+      <a href="https://melissa-rodier.github.io/week-in-my-shoes/">A Week in My Shoes</a>
+    </div>
+    <p>A sample project. Not affiliated with or endorsed by Exit Five. Episode content belongs to its creators.</p>
+  </footer>
+</div>
+
+<script>
+/* draft toggle */
+(function(){
+  var bF=document.getElementById('btnFinal'), b1=document.getElementById('btnFirst');
+  var f=document.getElementById('final'), r=document.getElementById('first');
+  function show(first){
+    r.hidden=!first; f.hidden=first;
+    b1.setAttribute('aria-pressed', first?'true':'false');
+    bF.setAttribute('aria-pressed', first?'false':'true');
+  }
+  bF.addEventListener('click',function(){show(false)});
+  b1.addEventListener('click',function(){show(true)});
+})();
+
+/* stepper */
+(function(){
+  var steps=[].slice.call(document.querySelectorAll('.stepper .step'));
+  var tabs=[].slice.call(document.querySelectorAll('.tabs a'));
+  var prev=document.getElementById('prev'), nxt=document.getElementById('nextStep');
+  var cur=0;
+  function show(i,scroll){
+    cur=Math.max(0,Math.min(steps.length-1,i));
+    steps.forEach(function(s,k){s.hidden=k!==cur});
+    tabs.forEach(function(a,k){ if(k===cur) a.setAttribute('aria-current','step'); else a.removeAttribute('aria-current'); });
+    prev.hidden=cur===0;
+    nxt.textContent= cur===steps.length-1 ? 'Back to the start' : 'Next step';
+    if(scroll){ document.querySelector('.tabs').scrollIntoView({block:'start'}); }
+    var ol=document.querySelector('.tabs ol'); ol.scrollLeft=Math.max(0,tabs[cur].parentNode.offsetLeft-20);
+  }
+  tabs.forEach(function(a,k){a.addEventListener('click',function(e){e.preventDefault();show(k,true);try{history.replaceState(null,'','#'+steps[k].id)}catch(_){}})});
+  prev.addEventListener('click',function(){show(cur-1,true)});
+  nxt.addEventListener('click',function(){show(cur===steps.length-1?0:cur+1,true)});
+  var h=(location.hash||'').slice(1);
+  var start=steps.findIndex(function(s){return s.id===h});
+  show(start<0?0:start,false);
+})();
+
+/* game dialog */
+(function(){
+  var d=document.getElementById('gameDialog');
+  function open(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); }
+  document.querySelectorAll('[data-open-game]').forEach(function(b){b.addEventListener('click',open)});
+  document.querySelectorAll('a[href="#play"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open()})});
+  document.getElementById('closeGame').addEventListener('click',function(){ if(d.close) d.close(); else d.removeAttribute('open'); });
+  d.addEventListener('click',function(e){ if(e.target===d && d.close) d.close(); });
+  if(location.hash==='#play') open();
+})();
+
+/* game: 50 or 50,000? */
+(function(){
+  var R=[
+    {a:{kw:"what is a CRM",vol:"49,500",v:"6,400",d:2},
+     b:{kw:"HubSpot vs. Salesforce for small sales teams",vol:"320",v:"210",d:11},
+     win:"b", lesson:"Comparison searches come from people who are already shopping. Fewer visitors, way more demos."},
+    {a:{kw:"Asana alternatives for marketing agencies",vol:"90",v:"140",d:7},
+     b:{kw:"how to manage remote teams",vol:"40,000",v:"5,100",d:1},
+     win:"a", lesson:"“Alternatives” is a buying signal. Someone typing that is ready to switch."},
+    {a:{kw:"Klaviyo vs. Mailchimp for Shopify brands",vol:"260",v:"260",d:9},
+     b:{kw:"how to write a welcome email",vol:"27,000",v:"3,800",d:1},
+     win:"a", lesson:"How-to readers want a template, not a vendor. The comparison reader is choosing one."},
+    {a:{kw:"what is account-based marketing",vol:"33,000",v:"4,500",d:2},
+     b:{kw:"6sense vs. Demandbase for mid-market companies",vol:"70",v:"120",d:8},
+     win:"b", lesson:"Seventy searches a month, and almost every one of them has a budget."},
+    {a:{kw:"ServiceTitan alternatives for small HVAC shops",vol:"50",v:"90",d:6},
+     b:{kw:"what is field service software",vol:"18,000",v:"2,900",d:1},
+     win:"a", lesson:"Literally the 50. Specific industry, specific size, specific problem."},
+    {a:{kw:"what is marketing attribution",vol:"22,000",v:"3,300",d:1},
+     b:{kw:"HockeyStack vs. Dreamdata for B2B SaaS",vol:"40",v:"110",d:7},
+     win:"b", lesson:"The big search teaches the concept. The small one decides the deal."},
+    {a:{kw:"HubSpot pricing",vol:"33,100",v:"4,800",d:24},
+     b:{kw:"what is inbound marketing",vol:"27,100",v:"7,200",d:2},
+     win:"a", lesson:"Gotcha. It was never about small numbers, it’s about intent. “Pricing” is a buyer at the finish line, and here the big search was the right one."}
+  ];
+  var i=0, total=0;
+  var opts=document.getElementById('opts'), reveal=document.getElementById('reveal'),
+      lesson=document.getElementById('lesson'), tally=document.getElementById('tally'),
+      label=document.getElementById('roundLabel'), next=document.getElementById('next'),
+      dots=document.getElementById('dots'), play=document.getElementById('gamePlay'),
+      end=document.getElementById('gameEnd');
+
+  function card(o,key){
+    var b=document.createElement('button');
+    b.type='button'; b.className='opt'; b.dataset.key=key;
+    b.innerHTML='<span class="kw">'+o.kw+'</span>'+
+      '<span class="vol"><b>'+o.vol+'</b>searches a month</span>'+
+      '<span class="res"><b>'+o.d+' demo'+(o.d===1?'':'s')+'</b> from '+o.v+' visits</span>';
+    b.addEventListener('click',function(){pick(key)});
+    return b;
+  }
+  function render(){
+    var r=R[i];
+    label.textContent='Round '+(i+1)+' of '+R.length;
+    opts.innerHTML='';
+    opts.appendChild(card(r.a,'a')); opts.appendChild(card(r.b,'b'));
+    reveal.classList.remove('show');
+    next.textContent = i===R.length-1 ? 'See my results' : 'Next round';
+    dots.innerHTML='';
+    for(var k=0;k<R.length;k++){var s=document.createElement('span'); if(k<i) s.className='done'; dots.appendChild(s);}
+  }
+  function pick(key){
+    var r=R[i], chosen=r[key];
+    total+=chosen.d; tally.textContent=total;
+    [].forEach.call(opts.children,function(b){
+      b.disabled=true; b.classList.add('shown');
+      if(b.dataset.key===key) b.classList.add('picked');
+    });
+    lesson.textContent=(key===r.win?'Nice pick. ':'Not this time. ')+r.lesson;
+    reveal.classList.add('show');
+    next.focus();
+  }
+  next.addEventListener('click',function(){
+    i++;
+    if(i<R.length){render(); opts.firstChild.focus();}
+    else finish();
+  });
+  function finish(){
+    play.hidden=true; end.hidden=false;
+    document.getElementById('finalTally').textContent=total;
+    var t,txt;
+    if(total>=66){t='Bottom-of-Funnel Sniper'; txt='You wrote for the 50 and still caught the twist. Lashay would hire you.';}
+    else if(total>=30){t='Middle Manager'; txt= total>=48&&total<=50 ? 'You nailed the small searches, but the twist got you. Remember: intent, not size.' : 'Some solid picks, some traffic chasing. Most of us have been there.';}
+    else {t='Top-of-Funnel Tourist'; txt='Lots of visitors, not many demos. Time to read the newsletter again.';}
+    document.getElementById('endTitle').textContent=t;
+    document.getElementById('endText').textContent=txt;
+    document.getElementById('again').focus();
+  }
+  document.getElementById('again').addEventListener('click',function(){
+    i=0; total=0; tally.textContent='0'; end.hidden=true; play.hidden=false; render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
