@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DHC7VCBPYF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DHC7VCBPYF');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>From Episode to Inbox: Melissa Rodier</title>
@@ -545,6 +554,7 @@ Start from the bottom. If I was leading a lean content team today (cue the back 
     prev.hidden=cur===0;
     nxt.textContent= cur===steps.length-1 ? 'Back to the start' : 'Next step';
     if(scroll){ document.querySelector('.tabs').scrollIntoView({block:'start'}); }
+    if(window.gtag) gtag('event','step_view',{step_number:cur+1,step_name:steps[cur].id});
     var ol=document.querySelector('.tabs ol'); ol.scrollLeft=Math.max(0,tabs[cur].parentNode.offsetLeft-20);
   }
   tabs.forEach(function(a,k){a.addEventListener('click',function(e){e.preventDefault();show(k,true);try{history.replaceState(null,'','#'+steps[k].id)}catch(_){}})});
@@ -558,7 +568,7 @@ Start from the bottom. If I was leading a lean content team today (cue the back 
 /* game dialog */
 (function(){
   var d=document.getElementById('gameDialog');
-  function open(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); }
+  function open(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); if(window.gtag) gtag('event','game_open'); }
   document.querySelectorAll('[data-open-game]').forEach(function(b){b.addEventListener('click',open)});
   document.querySelectorAll('a[href="#play"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open()})});
   document.getElementById('closeGame').addEventListener('click',function(){ if(d.close) d.close(); else d.removeAttribute('open'); });
@@ -635,6 +645,7 @@ Start from the bottom. If I was leading a lean content team today (cue the back 
   });
   function finish(){
     play.hidden=true; end.hidden=false;
+    if(window.gtag) gtag('event','game_complete',{demos_booked:total});
     document.getElementById('finalTally').textContent=total;
     var t,txt;
     if(total>=66){t='Bottom-of-Funnel Sniper'; txt='You wrote for the 50 and still caught the twist. Lashay would hire you.';}
